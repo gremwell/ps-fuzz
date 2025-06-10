@@ -59,7 +59,7 @@ class ClientCustom(ClientBase):
 
     def interact(self, history: MessageList, messages: MessageList) -> BaseMessage:
         history += messages
-        
+
         prompt = ""
         for msg in reversed(messages):
             if isinstance(msg, HumanMessage):
