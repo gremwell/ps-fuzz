@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 
 MODEL_NAME = "google/flan-t5-small"
 
-def initialize_client(model_name: str):
+def initialize_client():
     """Initialize a text2text-generation pipeline for instruction-tuned models."""
     return pipeline("text2text-generation", model=MODEL_NAME)
 
