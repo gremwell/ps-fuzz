@@ -54,24 +54,25 @@ class ClientLangChain(ClientBase):
 # Custom chat client using a lightweight transformers pipeline
 class ClientCustom(ClientBase):
     """Chat model wrapper around a local transformers pipeline"""
-    def __init__(self, model_name: str = custom.MODEL_NAME):
-        self.model_name = model_name
-        self.client = custom.initialize_client(model_name)
+    def __init__(self, model_name: str):
+        self.custom_client = custom.initialize_client(model_name)
 
     def interact(self, history: MessageList, messages: MessageList) -> BaseMessage:
-        # Keep track of conversation history (for compatibility only)
+
+        from loguru import logger
+        logger.debug(f"interact: history={history}")
+        logger.debug(f"interact: messages={messages}")
+
         history += messages
-        system_prompt = ""
-        for msg in history:
-            if isinstance(msg, SystemMessage):
-                system_prompt = msg.content
-                break
-        user_prompt = ""
+        
+        prompt = ""
         for msg in reversed(messages):
             if isinstance(msg, HumanMessage):
-                user_prompt = msg.content
+                prompt = msg.content
                 break
-        response, _ = custom.test_prompt(self.client, self.model_name, system_prompt, user_prompt)
+
+        response, _ = custom.test_prompt(self.custom_client, prompt)
+
         history.append(AIMessage(content=response))
         return response
 
