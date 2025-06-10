@@ -10,14 +10,11 @@ def initialize_client(model_name: str):
     return pipeline("text2text-generation", model=MODEL_NAME)
 
 
-def test_prompt(client, model: str, prompt: str):
+def generate(client, prompt: str):
     """Generate a response using the provided pipeline."""
-    try:
-        result = client(prompt, max_new_tokens=100)
-        generated_text = result[0]["generated_text"]
-        response = generated_text.strip()
-        logger.debug(f"Prompt: {prompt}")
-        logger.debug(f"Generated text: {response}")
-        return response, False
-    except Exception as exc:
-        return f"Error: {exc}", True
+    result = client(prompt, max_new_tokens=100)
+    generated_text = result[0]["generated_text"]
+    response = generated_text.strip()
+    logger.debug(f"Prompt: {prompt}")
+    logger.debug(f"Generated text: {response}")
+    return response

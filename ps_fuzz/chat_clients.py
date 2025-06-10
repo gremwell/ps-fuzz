@@ -58,11 +58,6 @@ class ClientCustom(ClientBase):
         self.custom_client = custom.initialize_client(model_name)
 
     def interact(self, history: MessageList, messages: MessageList) -> BaseMessage:
-
-        from loguru import logger
-        logger.debug(f"interact: history={history}")
-        logger.debug(f"interact: messages={messages}")
-
         history += messages
         
         prompt = ""
@@ -71,7 +66,7 @@ class ClientCustom(ClientBase):
                 prompt = msg.content
                 break
 
-        response, _ = custom.test_prompt(self.custom_client, prompt)
+        response = custom.generate(self.custom_client, prompt)
 
         history.append(AIMessage(content=response))
         return response
