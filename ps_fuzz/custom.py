@@ -1,5 +1,6 @@
 from transformers import pipeline
-from loguru import logger
+import logging
+logger = logging.getLogger(__name__)
 
 # Sample custom LLM integration using a lightweight model
 
