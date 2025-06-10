@@ -1,5 +1,5 @@
 from .langchain_integration import get_langchain_chat_models_info
-from . import custom
+import importlib
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.outputs.llm_result import LLMResult
 from langchain.schema import BaseMessage, HumanMessage, SystemMessage, AIMessage
@@ -55,7 +55,9 @@ class ClientLangChain(ClientBase):
 class ClientCustom(ClientBase):
     """Chat model wrapper around a local transformers pipeline"""
     def __init__(self, model_name: str):
-        self.custom_client = custom.initialize_client(model_name)
+        # Dynamically import the module named after the model_name
+        self.custom_module = importlib.import_module(model_name)
+        self.custom_client = self.custom_module.initialize_client(model_name)
 
     def interact(self, history: MessageList, messages: MessageList) -> BaseMessage:
         history += messages
@@ -66,7 +68,7 @@ class ClientCustom(ClientBase):
                 prompt = msg.content
                 break
 
-        response = custom.generate(self.custom_client, prompt)
+        response = self.custom_module.generate(self.custom_client, prompt)
 
         history.append(AIMessage(content=response))
         return response
