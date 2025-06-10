@@ -147,6 +147,7 @@ Alternatively, create a file named `.env` in the current directory and set the `
 | `PROMPTLAYER_API_KEY` |  `PromptLayer` and OpenAI Chat large language models API.|
 | `QIANFAN_AK`, `QIANFAN_SK` |  `Baidu Qianfan` chat models.|
 | `YC_API_KEY` | `YandexGPT` large language models.|
+| _none_ | Local transformers pipeline using `flan-t5-small` |
 </details>
 
 <br/>

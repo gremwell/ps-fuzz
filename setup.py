@@ -43,7 +43,9 @@ setup(
         "pandas==2.2.2",
         "inquirer==3.2.4",
         "prompt-toolkit==3.0.43",
-        "fastparquet==2024.2.0"
+        "fastparquet==2024.2.0",
+        "transformers==4.38.2",
+        "loguru==0.7.2"
     ],
     extras_require={
         "dev": ["pytest==7.4.4"]
